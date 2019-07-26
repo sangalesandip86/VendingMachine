@@ -1,5 +1,11 @@
 # VendingMachine
 
+**Setup and Run Instructions**
+1. Download zip and extract
+2. Import as maven project into IDE
+3. Goto /vending-machine/src/main/java/com/sandip/vm/ElderVendingMachine.java
+4. Run as Java application ElderVendingMachine.java
+
 **Supported Commands and Usage**
 
 |   Command     | Description  |
