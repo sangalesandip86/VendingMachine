@@ -3,15 +3,10 @@ package com.sandip.vm.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sandip.vm.constants.Constant;
 import com.sandip.vm.model.Product;
 
 public class Inventory {
-
-	private static final String PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT = "Product not present on selected slot";
-
-	private static final String ERROR_PLEASE_SET_PRODUCT_PRICE_BEFORE_SETTING_QUANTITY = "Error : Please set product price before setting quantity";
-
-	private static final String ERROR_PRODUCT_SLOT_DOES_NOT_EXIST = "Error : Product slot does not exist";
 
 	private Product[] productSlots;
 
@@ -21,7 +16,7 @@ public class Inventory {
 
 	public Product desiredProduct(Integer index) {
 		if (index > productSlots.length - 1) {
-			throw new IllegalArgumentException("Invalid product slot");
+			throw new IllegalArgumentException(Constant.INVALID_PRODUCT_SLOT);
 		}
 		return productSlots[index];
 	}
@@ -45,9 +40,9 @@ public class Inventory {
 			Product product = productSlots[productSlot];
 			return product.getPrice();
 		} catch (ArrayIndexOutOfBoundsException aib) {
-			throw new IllegalArgumentException(ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
+			throw new IllegalArgumentException(Constant.ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
 		} catch (NullPointerException e) {
-			throw new IllegalStateException(PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
+			throw new IllegalStateException(Constant.PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
 		}
 	}
 
@@ -56,9 +51,9 @@ public class Inventory {
 			Product product = productSlots[productSlot];
 			return product.getQuantity();
 		} catch (ArrayIndexOutOfBoundsException aib) {
-			throw new IllegalArgumentException(ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
+			throw new IllegalArgumentException(Constant.ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
 		} catch (NullPointerException e) {
-			throw new IllegalStateException(PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
+			throw new IllegalStateException(Constant.PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
 		}
 	}
 
@@ -70,7 +65,7 @@ public class Inventory {
 		if (product != null) {
 			product.setPrice(price);
 		} else {
-			throw new IllegalArgumentException(ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
+			throw new IllegalArgumentException(Constant.ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
 		}
 
 	}
@@ -78,7 +73,7 @@ public class Inventory {
 	public void setProductQuantity(Product productQ, Integer quantity) {
 		if (productQ != null) {
 			if (productQ.getPrice() == 0.0) {
-				throw new IllegalStateException(ERROR_PLEASE_SET_PRODUCT_PRICE_BEFORE_SETTING_QUANTITY);
+				throw new IllegalStateException(Constant.ERROR_PLEASE_SET_PRODUCT_PRICE_BEFORE_SETTING_QUANTITY);
 			} else {
 				productQ.setQuantity(quantity);
 			}

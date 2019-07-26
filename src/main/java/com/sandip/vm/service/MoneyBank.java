@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sandip.vm.constants.Constant;
 import com.sandip.vm.enums.Coin;
 import com.sandip.vm.exceptions.NotSufficientChangeException;
 
@@ -101,7 +102,7 @@ public class MoneyBank {
 			}
 		}
 		if (remainder > 0) {
-			throw new NotSufficientChangeException("Not Sufficient change for amount");
+			throw new NotSufficientChangeException(Constant.NOT_SUFFICIENT_CHANGE_FOR_AMOUNT);
 		}
 		removeCoinsFromBank(refundCoinCount);
 		return refundCoinCount;
