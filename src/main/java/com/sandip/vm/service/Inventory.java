@@ -76,10 +76,6 @@ public class Inventory {
 		return productSlots;
 	}
 
-	public void removeProduct(Integer productSlot) {
-		productSlots[productSlot] = null;
-	}
-
 	public void setProductPrice(Product product, Double price) {
 		if (product != null) {
 			product.setPrice(price);

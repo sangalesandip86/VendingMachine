@@ -8,12 +8,14 @@ import com.sandip.vm.exceptions.InvalidCommandException;
 
 public class ElderVendingMachine {
 
-	private static final String COMMAND_HELP_MESSAGE = "\n-- Commands Guide--\nINSERT 100\t- To insert multiple space separated Coins denom, it suppports denomination in PENCE Â£1 = 100\nSELECT 0 \t- To select product slot \nCOLLECT \t- Collect Item and change\nMAINTAIN\t- Maintenance\nCANCEL \t\t- Cancel purchase and refund inserted coins\nQUIT\t\t- Quit\n";
+	private static final String COMMAND_HELP_MESSAGE = "\n-- Commands Guide--\nINSERT 100\t- To insert Coins, denomination is in pence e.g £1 = 100, Command allows to add more than one coin at a time e.g INSERT 100 200 20 10\nSELECT 0 \t- To select product slot \nCOLLECT \t- Collect Item and change\nMAINTAIN\t- Maintenance\nCANCEL \t\t- Cancel purchase and refund inserted coins\nQUIT\t\t- Quit\n";
 
 	private static final VendingMachine vm = VendingMachineImpl.getInstance(4, Arrays.asList(0.1, 0.2, 0.5, 1.0, 2.0));
 
 	public static void main(String[] args) {
 
+		System.out.println(COMMAND_HELP_MESSAGE);
+		System.out.println();
 		vm.initializeInventory();
 		vm.initializeMoneyBank();
 		vm.whatsAvailable();

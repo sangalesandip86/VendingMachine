@@ -32,14 +32,6 @@ public class Screen {
 		System.out.println(message);
 	}
 
-	public String showAddMoreCoin(Double amontDeposited) {
-		DecimalFormat df = new DecimalFormat("#.00");
-		printMessage("Account Balance : Â£" + df.format(amontDeposited / 100));
-		printMessage(Constant.SPACE);
-		printMessage("Do you want to add more coin Y/N >> ");
-		return scanner.next();
-	}
-
 	public int showCoinQuantityMenu(String name) {
 		printMessage("Quantity of " + name + " coins >> ");
 		return scanner.nextInt();
@@ -62,25 +54,11 @@ public class Screen {
 	public int showCoinTypeMenu() {
 		printMessage(Constant.SPACE);
 		printMessage("Select Coin Type");
-		printMessage("1) Â£2");
-		printMessage("2) Â£1");
-		printMessage("3) Â£0.5");
-		printMessage("4) Â£0.2");
-		printMessage("5) Â£0.1");
-		printMessage(Constant.CHOICE);
-		return scanner.nextInt();
-	}
-
-	public int showMainMenu() {
-		printMessage(Constant.SPACE);
-		printMessage(Constant.SPACE);
-		printMessage("1) Display vending machine products ");
-		printMessage("2) Select Product");
-		printMessage("3) Insert Coin");
-		printMessage("4) Collect item and change");
-		printMessage("5) Cancel");
-		printMessage("6) Maintenance");
-		printMessage("7) Shut Down/ Exit");
+		printMessage("1) £2");
+		printMessage("2) £1");
+		printMessage("3) £0.5");
+		printMessage("4) £0.2");
+		printMessage("5) £0.1");
 		printMessage(Constant.CHOICE);
 		return scanner.nextInt();
 	}
@@ -100,22 +78,11 @@ public class Screen {
 		return menuSelection;
 	}
 
-	public int showPuchaseMenu() {
-		printMessage(Constant.SPACE);
-		printMessage("--PURCHASE MENU--");
-		printMessage("1) Feed Money");
-		printMessage("2) Select Product");
-		printMessage("3) Finish Transaction");
-		printMessage("4) Return to Main Menu");
-		System.out.print(Constant.CHOICE);
-		return scanner.nextInt();
-	}
-
 	public void showPurchasedProductAndBalance(Product desiredProduct, Double amount) {
 		DecimalFormat df = new DecimalFormat("#.00");
 		printMessage(Constant.SPACE);
 		printMessage("You have purchased : " + desiredProduct.getName());
-		printMessage("Account Balance : Â£" + df.format(amount / 100));
+		printMessage("Account Balance : £" + df.format(amount / 100));
 		printMessage(Constant.SPACE);
 	}
 
@@ -152,7 +119,7 @@ public class Screen {
 				Integer quantity = product.getQuantity();
 				Double price = product.getPrice();
 				DecimalFormat df = new DecimalFormat("0.00");
-				System.out.printf(PRODUCT_HEADER_PRINT_FORMAT, slotIndex, name, "Â£" + df.format(price), quantity);
+				System.out.printf(PRODUCT_HEADER_PRINT_FORMAT, slotIndex, name, "£" + df.format(price), quantity);
 			}
 			slotIndex++;
 		}

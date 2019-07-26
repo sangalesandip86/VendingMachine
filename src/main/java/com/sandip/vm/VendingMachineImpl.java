@@ -88,11 +88,6 @@ public class VendingMachineImpl implements VendingMachine {
 		}
 	}
 
-	@Override
-	public int displayMainMenu() {
-		return screen.showMainMenu();
-	}
-
 	private Map<Coin, Integer> finishPurchase() {
 		vend(purchaseTransaction.getSelectedProduct());
 		moneyBank.acceptPayment(purchaseTransaction.getCoinsDeposited());
@@ -164,9 +159,6 @@ public class VendingMachineImpl implements VendingMachine {
 		case 6:
 			Product quantityOfproduct = inventory.desiredProduct(screen.showSelectProductSlotMenu());
 			screen.showProductQuantity(quantityOfproduct);
-			break;
-		case 7:
-			displayMainMenu();
 			break;
 		default:
 			break;

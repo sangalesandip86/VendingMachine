@@ -18,8 +18,6 @@ public interface VendingMachine {
 	 */
 	public void collectItemAndChange();
 
-	public int displayMainMenu();
-
 	/**
 	 * Initialise Vending machine Money bank with 10 coins each type
 	 */
