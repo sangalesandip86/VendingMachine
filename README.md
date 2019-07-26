@@ -12,11 +12,19 @@
 | QUIT      	| Shutdown machine |
 
 
-** Approach Used to Refund Coin**
+**Approach Used to Refund Coin**
 
-1. highest denomination coin possible for given quantity.
-2. Second Highest Possible Coins.
+Assumption - Coins denomination in PENCE £1 = 100
 
+1. Sorted Supported Coins list in descending order 
+2. If coins quantity is available then Find number of possible for given amount
+	e.g  
+	- refundAmount = £5.2    (£5.2 = 520 PENCE)
+	- 2 coins of £2 is possible combination    (also checking that many coins available in machine)
+	- refundAmount = refundAmount - 200 * 2    (£2 = 200)
+	- For remaining amount try with next highest coin, and repeat same process     
+
+After trying to refund with all possible coins , if refundAmount > 0 then Show Message "Not Sufficient change for amount"
 
 **Problem Statement**
 
