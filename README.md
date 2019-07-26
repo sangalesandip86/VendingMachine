@@ -9,18 +9,11 @@ CANCEL 		  - Cancel purchase and refund inserted coins
 QUIT		    - Quit
 
 |   Command     | Description  |
-| --- | --- |
 | ------------- | ------------ |
-| INSERT 100    | To insert Coins, denomination is in pence e.g £1 = 100, Allow to add more than one coin at a time in command e.g INSERT 100 200 20 10  |
-| SELECT 0      | Content Cell |
-| COLLECT      	| Content Cell |
-| MAINTAIN      | Content Cell |
-| CANCEL      	| Content Cell |
-| QUIT      	| Content Cell |
+| INSERT 100    | To insert Coins, denomination is in pence e.g £1 = 100, Command allows to add more than one coin at a time e.g INSERT 100 200 20 10  |
+| SELECT 0      | Select Product slot. This command accepts valid Product Slot Number e.g SELECT 1 |
+| COLLECT      	| This Command use to Collect Selected item and returned coin change after purchase |
+| MAINTAIN      | To access Maintenance menu, where you can Set/Get Coin Quantity, Price  |
+| CANCEL      	| Cancel item purchase |
+| QUIT      	| Shutdown machine |
 
-
-
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
