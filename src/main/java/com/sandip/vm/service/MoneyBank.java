@@ -41,9 +41,7 @@ public class MoneyBank {
 	private Map<Coin, Integer> coinCountMap = new EnumMap<>(Coin.class);
 
 	public void acceptPayment(Map<Coin, Integer> coinsDeposited) {
-		for (Map.Entry<Coin, Integer> entry : coinsDeposited.entrySet()) {
-			addCoinsAndUpdateBalance(entry.getKey(), entry.getValue());
-		}
+		coinsDeposited.forEach(this::addCoinsAndUpdateBalance);
 	}
 
 	public void setCoinQuantity(Coin coin, int quantity) {
@@ -64,14 +62,7 @@ public class MoneyBank {
 	}
 
 	public synchronized void addCoinsIntoMachine(List<Coin> coins) {
-		for (Coin coin : coins) {
-			addCoinsAndUpdateBalance(coin, 1);
-		}
-	}
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		throw new CloneNotSupportedException();
+		coins.forEach(coin -> addCoinsAndUpdateBalance(coin, 1));
 	}
 
 	private Integer coinChange(Map<Coin, Integer> refundCoinCountMap, Integer remainder, Coin coin) {
@@ -89,19 +80,18 @@ public class MoneyBank {
 
 	public void initializeCoinAndBalance() {
 		if (supportedCoins != null) {
-			for (Coin coin : supportedCoins) {
+			supportedCoins.forEach(coin -> {
 				coinCountMap.put(coin, 10);
 				totalBalance = totalBalance + coin.getDenom() * 10;
-			}
+			});
 		}
 	}
 
 	public Map<Coin, Integer> refundAnyOverpayment(Double amount) {
 		Map<Coin, Integer> refundCoinCount = new EnumMap<>(Coin.class);
 
-		// Convert amount into pence e.g Â£1 = 100
+		// Convert amount into pence e.g £1 = 100
 		Integer remainder = amount.intValue();
-		// Collection smartnesss
 		Collections.sort(supportedCoins, Comparator.comparing(Coin::getDenom).reversed());
 		for (Coin coin : supportedCoins) {
 			if (remainder != 0) {
@@ -125,10 +115,7 @@ public class MoneyBank {
 	}
 
 	public void removeCoinsFromBank(Map<Coin, Integer> refundCoinCount) {
-
-		for (Map.Entry<Coin, Integer> entry : refundCoinCount.entrySet()) {
-			removeCoinsAndUpdateBalance(entry.getKey(), entry.getValue());
-		}
+		refundCoinCount.forEach(this::removeCoinsAndUpdateBalance);
 	}
 
 	public void setCointCount(Coin coinType, Integer quantity) {

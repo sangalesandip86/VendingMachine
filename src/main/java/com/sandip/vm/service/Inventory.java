@@ -3,10 +3,11 @@ package com.sandip.vm.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sandip.vm.exceptions.VendingMachineException;
 import com.sandip.vm.model.Product;
 
 public class Inventory {
+
+	private static final String PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT = "Product not present on selected slot";
 
 	private static final String ERROR_PLEASE_SET_PRODUCT_PRICE_BEFORE_SETTING_QUANTITY = "Error : Please set product price before setting quantity";
 
@@ -18,25 +19,10 @@ public class Inventory {
 		productSlots = new Product[numberOfSlots];
 	}
 
-	public void addProduct(Integer productSlot, Product product) {
-		if (productSlots[productSlot] == null) {
-			productSlots[productSlot] = product;
-		} else {
-			throw new VendingMachineException("Product slot is not empty");
-		}
-	}
-
-	public void replaceProduct(Integer productSlot, Product product) {
-		productSlots[productSlot] = product;
-
-	}
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		throw new CloneNotSupportedException();
-	}
-
 	public Product desiredProduct(Integer index) {
+		if (index > productSlots.length - 1) {
+			throw new IllegalArgumentException("Invalid product slot");
+		}
 		return productSlots[index];
 	}
 
@@ -55,20 +41,24 @@ public class Inventory {
 	}
 
 	public Double getProductPrice(Integer productSlot) {
-		Product product = productSlots[productSlot];
-		if (product != null) {
+		try {
+			Product product = productSlots[productSlot];
 			return product.getPrice();
-		} else {
+		} catch (ArrayIndexOutOfBoundsException aib) {
 			throw new IllegalArgumentException(ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
+		} catch (NullPointerException e) {
+			throw new IllegalStateException(PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
 		}
 	}
 
 	public Integer getProductQuantity(Integer productSlot) {
-		Product product = productSlots[productSlot];
-		if (product != null) {
+		try {
+			Product product = productSlots[productSlot];
 			return product.getQuantity();
-		} else {
+		} catch (ArrayIndexOutOfBoundsException aib) {
 			throw new IllegalArgumentException(ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
+		} catch (NullPointerException e) {
+			throw new IllegalStateException(PRODUCT_NOT_PRESENT_ON_SELECTED_SLOT);
 		}
 	}
 

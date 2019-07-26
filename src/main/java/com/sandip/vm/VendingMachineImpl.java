@@ -223,13 +223,13 @@ public class VendingMachineImpl implements VendingMachine {
 	@Override
 	public List<Coin> insertCoins(String[] insertedCoins) {
 		List<Coin> depositedCoins = new ArrayList<>();
-		for (String coinDenom : insertedCoins) {
+		Arrays.asList(insertedCoins).forEach(coinDenom -> {
 			if (isValidCoin(coinDenom)) {
 				depositedCoins.add(Coin.valueOf(Integer.parseInt(coinDenom)));
 			} else {
 				throw new IllegalArgumentException(INVALID_COIN_DENOMINATION);
 			}
-		}
+		});
 		purchaseTransaction.depositeCoin(depositedCoins);
 		return depositedCoins;
 	}
@@ -245,6 +245,7 @@ public class VendingMachineImpl implements VendingMachine {
 
 	@Override
 	public void quit() {
+		System.out.println("Exit");
 		System.exit(0);
 	}
 }

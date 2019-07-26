@@ -17,12 +17,12 @@ public class Screen {
 
 	private void printMaintenanceManu() {
 		printMessage(Constant.SPACE);
-		printMessage("1) Set Amount of Coins ");
-		printMessage("2) Get Amount of coins ");
-		printMessage("3) Set Quantity for given product slot ");
-		printMessage("4) Get Quantity for given product slot ");
-		printMessage("3) Set Price for given product slot ");
-		printMessage("4) Get Price for given product slot ");
+		printMessage("1) Set Coins quantity");
+		printMessage("2) Get Coins quantity");
+		printMessage("3) Set Quantity of product slot ");
+		printMessage("4) Get Quantity of product slot ");
+		printMessage("3) Set Price of product slot ");
+		printMessage("4) Get Price of product slot ");
 		printMessage("5) Return Main Menu");
 		printMessage(Constant.CHOICE);
 		printMessage(Constant.SPACE);

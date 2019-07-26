@@ -6,6 +6,7 @@ package com.sandip.vm.exceptions;
  *
  */
 public class SoldOutException extends RuntimeException {
+	private static final long serialVersionUID = 5940861816185959813L;
 	private final String message;
 
 	public SoldOutException(String string) {
