@@ -27,5 +27,5 @@ public enum Coin {
 		}
 		throw new IllegalArgumentException("Invalid Denomination");
 	}
-	
+
 }
