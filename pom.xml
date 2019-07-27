@@ -3,13 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.nlc</groupId>
-	<artifactId>natural-language-calculator</artifactId>
+	<artifactId>vending-machine</artifactId>
 	<version>0.1</version>
-	<name>Natural Language Calculator</name>
-	<description>
-    	Natural Language Calculator
-    </description>
-
+	<name>Vending Machine</name>
 	<properties>
 		<jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
