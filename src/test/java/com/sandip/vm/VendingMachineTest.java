@@ -1,8 +1,6 @@
 package com.sandip.vm;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
@@ -34,20 +32,6 @@ public class VendingMachineTest {
 		productSlots[0] = new Product("Coke", 2.1, 1);
 	}
 
-	@Test
-	public void testWhatsAvailable() {
-		//Given
-		Product[] productSlots = new Product[3];
-		productSlots[0] = new Product("Coke", 1.5, 1);
-		productSlots[0] = new Product("Coke", 1.0, 1);
-		productSlots[0] = new Product("Coke", 2.1, 1);
-
-		doReturn(productSlots).when(inventory).getProductSlots();
-		doNothing().when(screen).showWhatsAvailable(Arrays.asList(productSlots));
-		//When
-		vm.whatsAvailable();
-	}
-	
 	@Test
 	public void testInsertCoins() {
 		//Given
