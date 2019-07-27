@@ -9,6 +9,12 @@ import com.sandip.vm.constants.Constant;
 import com.sandip.vm.enums.Coin;
 import com.sandip.vm.model.Product;
 
+/**
+ * This class responsible for printing messages and scanner related operation
+ * 
+ * @author sandip.p.sangale
+ *
+ */
 public class Screen {
 
 	private static final String PRODUCT_HEADER_PRINT_FORMAT = "%-10s %-20s %15s %15s %n";
@@ -21,13 +27,18 @@ public class Screen {
 		printMessage("2) Get Coins quantity");
 		printMessage("3) Set Quantity of product slot ");
 		printMessage("4) Get Quantity of product slot ");
-		printMessage("3) Set Price of product slot ");
-		printMessage("4) Get Price of product slot ");
-		printMessage("5) Return Main Menu");
+		printMessage("5) Set Price of product slot ");
+		printMessage("6) Get Price of product slot ");
+		printMessage("7) Return Main Menu");
 		printMessage(Constant.CHOICE);
 		printMessage(Constant.SPACE);
 	}
 
+	/**
+	 * Print string to console
+	 * 
+	 * @param message
+	 */
 	public void printMessage(String message) {
 		System.out.println(message);
 	}
@@ -45,6 +56,10 @@ public class Screen {
 		printMessage(Constant.SPACE);
 	}
 
+	/**
+	 * 
+	 * @param message
+	 */
 	public void showErrorMessage(String message) {
 		printMessage(Constant.SPACE);
 		printMessage("ERROR: " + message);
@@ -124,26 +139,44 @@ public class Screen {
 			slotIndex++;
 		}
 	}
-
+/**
+ * 
+ * @return
+ */
 	public int showSetCoinCountMenu() {
 		return showCoinTypeMenu();
 	}
-
+/**
+ * 
+ * @return
+ */
 	public int showGetCoinCountMenu() {
 		return showCoinTypeMenu();
 	}
-
+/**
+ * 
+ * @param product
+ * @return
+ */
 	public double showSetProductPriceMenu(Product product) {
 		printMessage("Enter new price for " + product + " : >> ");
 		return scanner.nextDouble();
 	}
-
+/**
+ * 
+ * @param coinType
+ * @param availableQuantity
+ */
 	public void showCoinAndAvailableQuantity(Coin coinType, int availableQuantity) {
 		printMessage(Constant.SPACE);
 		printMessage("Available Quantity of " + coinType.getName() + " is " + availableQuantity);
 		printMessage(Constant.SPACE);
 	}
 
+	/**
+	 * 
+	 * @param product
+	 */
 	public void showProductPrice(Product product) {
 		DecimalFormat df = new DecimalFormat("#.00");
 		printMessage(Constant.SPACE);
@@ -151,11 +184,20 @@ public class Screen {
 		printMessage(Constant.SPACE);
 	}
 
+	/**
+	 * 
+	 * @param product
+	 * @return
+	 */
 	public int showSetProductQuantityMenu(Product product) {
 		printMessage("Enter new quantity for " + product.getName() + "  >> ");
 		return scanner.nextInt();
 	}
 
+	/**
+	 * 
+	 * @param quantityOfproduct
+	 */
 	public void showProductQuantity(Product quantityOfproduct) {
 		printMessage(Constant.SPACE);
 		printMessage("Available quantity of " + quantityOfproduct.getName() + " is " + quantityOfproduct.getQuantity());

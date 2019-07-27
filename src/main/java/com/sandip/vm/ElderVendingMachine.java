@@ -1,6 +1,7 @@
 package com.sandip.vm;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.sandip.vm.constants.Constant;
@@ -8,31 +9,30 @@ import com.sandip.vm.exceptions.InvalidCommandException;
 
 public class ElderVendingMachine {
 
-	private static final String COMMAND_HELP_MESSAGE = "\n-- Commands Guide--\nINSERT 100\t- To insert Coins, denomination is in pence e.g £1 = 100, Command allows to add more than one coin at a time e.g INSERT 100 200 20 10\nSELECT 0 \t- To select product slot \nCOLLECT \t- Collect Item and change\nMAINTAIN\t- Maintenance\nCANCEL \t\t- Cancel purchase and refund inserted coins\nQUIT\t\t- Quit\n";
-
 	private static final VendingMachine vm = VendingMachineImpl.getInstance(4, Arrays.asList(0.1, 0.2, 0.5, 1.0, 2.0));
 
 	public static void main(String[] args) {
 
-		System.out.println(COMMAND_HELP_MESSAGE);
-		System.out.println();
+		printMessage(Constant.COMMAND_HELP_MESSAGE);
+		printMessage(Constant.SUPPORTED_COINS);
+		printMessage(Constant.SPACE);
 		vm.initializeInventory();
 		vm.initializeMoneyBank();
 		vm.whatsAvailable();
 
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
-				System.out.println("Enter Command >> ");
-				String command = (scanner.nextLine().trim()).toUpperCase();
+				printMessage("Enter Command >> ");
 				try {
+					String command = (scanner.nextLine().trim()).toUpperCase();
 					acceptCommand(command);
-				} catch (IllegalArgumentException iae) {
-					System.out.println(iae.getMessage());
+				} catch (IllegalArgumentException | NoSuchElementException iae) {
+					printMessage(iae.getMessage());
 				} catch (InvalidCommandException ice) {
-					System.out.println(ice.getMessage());
-					System.out.println(ice.getHelpMessage());
+					printMessage(ice.getMessage());
+					printMessage(ice.getHelpMessage());
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
+					printMessage(e.getMessage());
 				}
 			}
 		}
@@ -46,6 +46,9 @@ public class ElderVendingMachine {
 		String[] params = Arrays.copyOfRange(commandParams, 1, commandParams.length);
 
 		switch (mainCommand) {
+		case Constant.DISPLAY:
+			vm.whatsAvailable();
+			break;
 		case Constant.INSERT_COIN:
 			vm.insertCoins(params);
 			break;
@@ -65,8 +68,12 @@ public class ElderVendingMachine {
 			vm.quit();
 			break;
 		default:
-			throw new InvalidCommandException("Invalid Command", COMMAND_HELP_MESSAGE);
+			throw new InvalidCommandException(Constant.INVALID_COMMAND, Constant.COMMAND_HELP_MESSAGE);
 		}
 
+	}
+
+	private static void printMessage(String message) {
+		System.out.println(message);
 	}
 }

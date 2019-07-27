@@ -1,5 +1,8 @@
 package com.sandip.vm.service;
 
+/**
+ * This class is responsible for coins and machine balance related operation
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,14 +14,25 @@ import com.sandip.vm.constants.Constant;
 import com.sandip.vm.enums.Coin;
 import com.sandip.vm.exceptions.NotSufficientChangeException;
 
+/**
+ * 
+ * @author sandip.p.sangale
+ *
+ */
 public class MoneyBank {
 
 	public List<Coin> getSupportedCoins() {
 		return supportedCoins;
 	}
 
+	/**
+	 * Holds list of supported coins in this machine
+	 */
 	private List<Coin> supportedCoins;
-
+	/**
+	 * This variable used to maintain total balance, It store balance in PENCE
+	 * denomination
+	 */
 	private Integer totalBalance = 0;
 
 	private static List<Coin> buildSupportedCoinsList(List<Double> coinsSupported) {
@@ -31,6 +45,10 @@ public class MoneyBank {
 		totalBalance = totalBalance - amount;
 	}
 
+	/**
+	 * 
+	 * @param coinsSupported
+	 */
 	public MoneyBank(List<Double> coinsSupported) {
 		this.supportedCoins = buildSupportedCoinsList(coinsSupported);
 	}
@@ -45,6 +63,12 @@ public class MoneyBank {
 		coinsDeposited.forEach(this::addCoinsAndUpdateBalance);
 	}
 
+	/**
+	 * Set total coin quantity
+	 * 
+	 * @param coin
+	 * @param quantity
+	 */
 	public void setCoinQuantity(Coin coin, int quantity) {
 		if (coinCountMap.containsKey(coin)) {
 			decreaseTotalBalance(coin.getDenom() * coinCountMap.get(coin));
@@ -53,6 +77,11 @@ public class MoneyBank {
 		increaseTotalBalance(coin.getDenom() * quantity);
 	}
 
+	/**
+	 * 
+	 * @param coin
+	 * @param noOfCoins
+	 */
 	private void addCoinsAndUpdateBalance(Coin coin, Integer noOfCoins) {
 		if (coinCountMap.containsKey(coin)) {
 			coinCountMap.put(coin, coinCountMap.get(coin) + noOfCoins);
@@ -62,6 +91,10 @@ public class MoneyBank {
 		increaseTotalBalance(coin.getDenom() * noOfCoins);
 	}
 
+	/**
+	 * 
+	 * @param coins
+	 */
 	public synchronized void addCoinsIntoMachine(List<Coin> coins) {
 		coins.forEach(coin -> addCoinsAndUpdateBalance(coin, 1));
 	}
@@ -75,10 +108,18 @@ public class MoneyBank {
 		return remainder;
 	}
 
+	/**
+	 * 
+	 * @param coin
+	 * @return
+	 */
 	public Integer getCointCount(Coin coin) {
 		return coinCountMap.get(coin) != null ? coinCountMap.get(coin) : 0;
 	}
 
+	/**
+	 * 
+	 */
 	public void initializeCoinAndBalance() {
 		if (supportedCoins != null) {
 			supportedCoins.forEach(coin -> {
@@ -88,6 +129,17 @@ public class MoneyBank {
 		}
 	}
 
+	/**
+	 * This method calculated number of coins to return for remaining amount
+	 * 
+	 * refundAmount = £5.2 (£5.2 = 520 PENCE) 2 coins of £2 is possible combination
+	 * (also checking that many coins available in machine) refundAmount =
+	 * refundAmount - 200 * 2 (£2 = 200) For remaining amount try with next highest
+	 * coin, and repeat same process
+	 * 
+	 * @param amount
+	 * @return
+	 */
 	public Map<Coin, Integer> refundAnyOverpayment(Double amount) {
 		Map<Coin, Integer> refundCoinCount = new EnumMap<>(Coin.class);
 
@@ -115,10 +167,19 @@ public class MoneyBank {
 		}
 	}
 
-	public void removeCoinsFromBank(Map<Coin, Integer> refundCoinCount) {
+	/**
+	 * 
+	 * @param refundCoinCount
+	 */
+	private void removeCoinsFromBank(Map<Coin, Integer> refundCoinCount) {
 		refundCoinCount.forEach(this::removeCoinsAndUpdateBalance);
 	}
 
+	/**
+	 * 
+	 * @param coinType
+	 * @param quantity
+	 */
 	public void setCointCount(Coin coinType, Integer quantity) {
 		if (coinCountMap.containsKey(coinType)) {
 			Integer currentCount = coinCountMap.get(coinType);

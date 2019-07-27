@@ -63,6 +63,10 @@ public class PurchaseTransaction {
 		return purchaseAmount != 0 && amountDeposited >= purchaseAmount * 100;
 	}
 
+	public double requiredFund() {
+		return purchaseAmount * 100 - amountDeposited;
+	}
+
 	public void resetPurchase() {
 		coinsDeposited.clear();
 		amountDeposited = 0L;

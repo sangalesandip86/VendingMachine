@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.sandip.vm.constants.Constant;
 import com.sandip.vm.enums.Coin;
 import com.sandip.vm.exceptions.InvalidMenuOptionException;
 import com.sandip.vm.exceptions.NotFullPaidException;
@@ -16,27 +17,13 @@ import com.sandip.vm.service.PurchaseTransaction;
 import com.sandip.vm.service.Screen;
 
 /**
+ * This class is responsible for providing implementation for vending machine
+ * related operation
  * 
  * @author sandip.p.sangale
  *
  */
 public class VendingMachineImpl implements VendingMachine {
-
-	private static final String SOLD_OUT = "Sold out";
-
-	private static final String PRODUCT_SLOT_MUST_BE_VALID_POSITIVE_NUMBER = "Product slot must be valid positive number";
-
-	private static final String INSUFFICIENT_FUNDS_PLEASE_FEED_MORE_MONEY = "Insufficient Funds. Please feed more money.";
-
-	private static final String PLEASE_SELECT_A_PRODUCT_FOR_PURCHASE = "Please select a product for purchase.";
-
-	private static final String INVALID_CHOICE = "Invalid choice";
-
-	private static final String IS_NOT_A_VALID_NUMBER = " is not a valid number";
-
-	private static final String INVALID_COIN_DENOMINATION = "Invalid coin denomination, Machine accepts only 10, 20, 50, 100, 200 PENCE denominations";
-
-	private static final String SELECT_COMMAND_EXPECT_EXACT_1_PRODUCT_SLOT = "SELECT command expect exact 1 product slot";
 
 	private static final VendingMachineImpl SINGLE_INSTANCE = new VendingMachineImpl();
 
@@ -79,10 +66,10 @@ public class VendingMachineImpl implements VendingMachine {
 	@Override
 	public void collectItemAndChange() {
 		if (!purchaseTransaction.isProductSelected()) {
-			screen.showErrorMessage(PLEASE_SELECT_A_PRODUCT_FOR_PURCHASE);
+			screen.showErrorMessage(Constant.PLEASE_SELECT_A_PRODUCT_FOR_PURCHASE);
 		} else if (!purchaseTransaction.isSuffientFundAvailable()) {
-			screen.showErrorMessage(INSUFFICIENT_FUNDS_PLEASE_FEED_MORE_MONEY);
-			throw new NotFullPaidException(INSUFFICIENT_FUNDS_PLEASE_FEED_MORE_MONEY, 0);
+			throw new NotFullPaidException(Constant.INSUFFICIENT_FUNDS_PLEASE_FEED_MORE_MONEY,
+					purchaseTransaction.requiredFund());
 		} else {
 			finishPurchase();
 		}
@@ -111,7 +98,7 @@ public class VendingMachineImpl implements VendingMachine {
 		} else if (coinMenu == 5) {
 			return Coin.TEN_PENCE;
 		} else {
-			throw new InvalidMenuOptionException(INVALID_CHOICE);
+			throw new InvalidMenuOptionException(Constant.INVALID_CHOICE);
 		}
 	}
 
@@ -201,7 +188,7 @@ public class VendingMachineImpl implements VendingMachine {
 		Product product = inventory.desiredProduct(Integer.parseInt(productSlot[0]));
 		purchaseTransaction.setDesiredProduct(product);
 		if (!product.isAvailable()) {
-			throw new SoldOutException(SOLD_OUT);
+			throw new SoldOutException(Constant.SOLD_OUT);
 		} else {
 			screen.showDesiredProductAndPrice(product);
 		}
@@ -212,11 +199,11 @@ public class VendingMachineImpl implements VendingMachine {
 			try {
 				Integer.parseInt(params[0]);
 			} catch (NumberFormatException e) {
-				throw new IllegalArgumentException(PRODUCT_SLOT_MUST_BE_VALID_POSITIVE_NUMBER);
+				throw new IllegalArgumentException(Constant.PRODUCT_SLOT_MUST_BE_VALID_POSITIVE_NUMBER);
 			}
 			return true;
 		} else {
-			throw new IllegalArgumentException(SELECT_COMMAND_EXPECT_EXACT_1_PRODUCT_SLOT);
+			throw new IllegalArgumentException(Constant.SELECT_COMMAND_EXPECT_EXACT_1_PRODUCT_SLOT);
 		}
 	}
 
@@ -227,7 +214,7 @@ public class VendingMachineImpl implements VendingMachine {
 			if (isValidCoin(coinDenom)) {
 				depositedCoins.add(Coin.valueOf(Integer.parseInt(coinDenom)));
 			} else {
-				throw new IllegalArgumentException(INVALID_COIN_DENOMINATION);
+				throw new IllegalArgumentException(Constant.INVALID_COIN_DENOMINATION);
 			}
 		});
 		purchaseTransaction.depositeCoin(depositedCoins);
@@ -239,13 +226,13 @@ public class VendingMachineImpl implements VendingMachine {
 			List<Coin> coins = moneyBank.getSupportedCoins();
 			return coins.stream().anyMatch(e -> e.getDenom() == Integer.parseInt(coinDenom));
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException(coinDenom + IS_NOT_A_VALID_NUMBER);
+			throw new IllegalArgumentException(coinDenom + Constant.IS_NOT_A_VALID_NUMBER);
 		}
 	}
 
 	@Override
 	public void quit() {
-		System.out.println("Exit");
+		System.out.println("Machine Shut Down");
 		System.exit(0);
 	}
 }

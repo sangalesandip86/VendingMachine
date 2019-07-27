@@ -1,5 +1,11 @@
 package com.sandip.vm.service;
 
+/**
+ * This class is responsible for handling Product related operation
+ * 
+ * @author sandip.p.sangale
+ *
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +16,21 @@ public class Inventory {
 
 	private Product[] productSlots;
 
+	/**
+	 * Create Inventory instance with maxNumberOfSlots
+	 * 
+	 * @param numberOfSlots
+	 */
 	public Inventory(Integer numberOfSlots) {
 		productSlots = new Product[numberOfSlots];
 	}
 
+	/**
+	 * Returns product on selected slot
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public Product desiredProduct(Integer index) {
 		if (index > productSlots.length - 1) {
 			throw new IllegalArgumentException(Constant.INVALID_PRODUCT_SLOT);
@@ -35,6 +52,11 @@ public class Inventory {
 		return inventoryItems;
 	}
 
+	/**
+	 * 
+	 * @param productSlot
+	 * @return
+	 */
 	public Double getProductPrice(Integer productSlot) {
 		try {
 			Product product = productSlots[productSlot];
@@ -46,6 +68,11 @@ public class Inventory {
 		}
 	}
 
+	/**
+	 * 
+	 * @param productSlot
+	 * @return
+	 */
 	public Integer getProductQuantity(Integer productSlot) {
 		try {
 			Product product = productSlots[productSlot];
@@ -57,19 +84,35 @@ public class Inventory {
 		}
 	}
 
+	/**
+	 * reutrn Products array
+	 * 
+	 * @return
+	 */
 	public Product[] getProductSlots() {
 		return productSlots;
 	}
 
+	/**
+	 * Set price for given Product
+	 * 
+	 * @param product
+	 * @param price
+	 */
 	public void setProductPrice(Product product, Double price) {
 		if (product != null) {
 			product.setPrice(price);
 		} else {
 			throw new IllegalArgumentException(Constant.ERROR_PRODUCT_SLOT_DOES_NOT_EXIST);
 		}
-
 	}
 
+	/**
+	 * Set Product Quantity
+	 * 
+	 * @param productQ
+	 * @param quantity
+	 */
 	public void setProductQuantity(Product productQ, Integer quantity) {
 		if (productQ != null) {
 			if (productQ.getPrice() == 0.0) {
@@ -80,6 +123,9 @@ public class Inventory {
 		}
 	}
 
+	/**
+	 * Initialise vending machine inventory with default products
+	 */
 	public void initializeInventory() {
 		List<Product> globalInventory = getInventoryItems();
 		int globalIndex = 0;
